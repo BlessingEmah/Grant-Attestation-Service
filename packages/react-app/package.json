@@ -9,17 +9,17 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@celo/rainbowkit-celo": "^1.0.1",
+    "@celo/rainbowkit-celo": "^0.11.0",
     "@ethereum-attestation-service/eas-sdk": "^1.0.0-beta.0",
     "@headlessui/react": "^1.7.14",
     "@heroicons/react": "^2.0.18",
-    "@rainbow-me/rainbowkit": "^1.0.2",
+    "@rainbow-me/rainbowkit": "^0.12.0",
     "ethers": "^5.7.2",
     "next": "^13.4.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "viem": "^0.3.30",
-    "wagmi": "^1.2"
+    "wagmi": "^0.12.2"
   },
   "devDependencies": {
     "@types/node": "^20.2.1",
