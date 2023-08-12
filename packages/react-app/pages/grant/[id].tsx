@@ -83,6 +83,82 @@ export default function GrantDetailPage() {
         columns={headerCells}
         rows={[attestation]}
       ></MilestoneTable>
+      <div/>
+      <div>
+        <div className="mt-2 mr-4 flex flex-row ">
+          <label className="block w-80  text-m mr-4 mt-2 leading-6 font-medium text-gray-900">
+            Grant Title
+          </label>
+          <p
+            id="grantTitle"
+            // name="grantTitle"
+            // type="text"
+            // required
+            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+    
+          />
+        </div>
+      </div>
+
+      <div>
+        <div className="mt-2 mr-4 flex flex-row ">
+          <label className="block w-80  text-m mr-4 mt-2 leading-6 font-medium text-gray-900">
+            Grant Recipient
+          </label>
+          <p
+            id="grantRecipient"
+            // name="grantRecipient"
+            // type="text"
+            // required
+            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+          />
+        </div>
+      </div>
+
+      <div>
+        <div className="mt-2 mr-4 flex flex-row ">
+          <label className="block w-80  text-m mr-4 mt-2 leading-6 font-medium text-gray-900">
+            Grant Description
+          </label>
+          <p
+            // id="grant description"
+            // name="grantDescription"
+            // type="text"
+            // required
+            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+          
+          />
+        </div>
+      </div>
+
+      <div>
+        <div className="mt-2 mr-4 flex flex-row ">
+          <label className="block w-80  text-m mr-4 mt-2 leading-6 font-medium text-gray-900">
+            Number of Milestones
+          </label>
+          <p
+            id="numberOfMilestones"
+            // name="numberOfMilestones"
+            // type="number"
+            // required
+            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+          />
+        </div>
+      </div>
+      <div>
+        <div className="mt-2 mr-4 flex flex-row ">
+          <label className="block w-80  text-m mr-4 mt-2 leading-6 font-medium text-gray-900">
+            Grant Amount
+          </label>
+          <p
+            id="grantAmount"
+            // name="grantAmount"
+            // type="number"
+            // required
+            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+          />
+        </div>
+      </div>
     </div>
   );
 }
