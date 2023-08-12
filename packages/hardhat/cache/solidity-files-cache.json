@@ -304,8 +304,8 @@
       ]
     },
     "/Users/lenahierzi/Developer/Grant-Attestation-Service/packages/hardhat/contracts/GrantPaymentModule.sol": {
-      "lastModificationDate": 1691662495190,
-      "contentHash": "2d39fc10af7849a0a74ed7becf997a09",
+      "lastModificationDate": 1691880726794,
+      "contentHash": "3c0d3f0a02f0f5e89e239cacac329813",
       "sourceName": "contracts/GrantPaymentModule.sol",
       "solcConfig": {
         "version": "0.8.0",
@@ -339,7 +339,8 @@
       },
       "imports": [
         "./Enum.sol",
-        "./SignatureDecoder.sol"
+        "./SignatureDecoder.sol",
+        "@openzeppelin/contracts/token/ERC20/IERC20.sol"
       ],
       "versionPragmas": [
         "^0.8.0"

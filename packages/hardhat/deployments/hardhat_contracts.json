@@ -1,0 +1,328 @@
+{
+  "84531": [
+    {
+      "name": "baseGoerli",
+      "chainId": "84531",
+      "contracts": {
+        "GrantPaymentModule": {
+          "address": "0x1809F0a8a8f9b361E6Ddba3D8fD06D337840103A",
+          "abi": [
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "_tokenAddress",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "nonpayable",
+              "type": "constructor"
+            },
+            {
+              "inputs": [],
+              "name": "DOMAIN_SEPARATOR_TYPEHASH",
+              "outputs": [
+                {
+                  "internalType": "bytes32",
+                  "name": "",
+                  "type": "bytes32"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "GRANT_TRANSFER_TYPEHASH",
+              "outputs": [
+                {
+                  "internalType": "bytes32",
+                  "name": "",
+                  "type": "bytes32"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "NAME",
+              "outputs": [
+                {
+                  "internalType": "string",
+                  "name": "",
+                  "type": "string"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "VERSION",
+              "outputs": [
+                {
+                  "internalType": "string",
+                  "name": "",
+                  "type": "string"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address[]",
+                  "name": "_delegates",
+                  "type": "address[]"
+                }
+              ],
+              "name": "addDelegates",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "name": "approvedDelegates",
+              "outputs": [
+                {
+                  "internalType": "bool",
+                  "name": "",
+                  "type": "bool"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "_granteeAddress",
+                  "type": "address"
+                }
+              ],
+              "name": "deleteGrant",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "_granteeAddress",
+                  "type": "address"
+                }
+              ],
+              "name": "getGrant",
+              "outputs": [
+                {
+                  "components": [
+                    {
+                      "internalType": "address",
+                      "name": "delegate",
+                      "type": "address"
+                    },
+                    {
+                      "internalType": "uint96",
+                      "name": "amount",
+                      "type": "uint96"
+                    },
+                    {
+                      "internalType": "uint96",
+                      "name": "distributedAmount",
+                      "type": "uint96"
+                    },
+                    {
+                      "internalType": "uint96",
+                      "name": "milestoneAmount",
+                      "type": "uint96"
+                    },
+                    {
+                      "internalType": "uint96",
+                      "name": "reachedMilestoneAmount",
+                      "type": "uint96"
+                    },
+                    {
+                      "internalType": "string",
+                      "name": "grantRefID",
+                      "type": "string"
+                    },
+                    {
+                      "internalType": "uint16",
+                      "name": "nonce",
+                      "type": "uint16"
+                    }
+                  ],
+                  "internalType": "struct GrantPaymentModule.Grant",
+                  "name": "",
+                  "type": "tuple"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "name": "grants",
+              "outputs": [
+                {
+                  "internalType": "address",
+                  "name": "delegate",
+                  "type": "address"
+                },
+                {
+                  "internalType": "uint96",
+                  "name": "amount",
+                  "type": "uint96"
+                },
+                {
+                  "internalType": "uint96",
+                  "name": "distributedAmount",
+                  "type": "uint96"
+                },
+                {
+                  "internalType": "uint96",
+                  "name": "milestoneAmount",
+                  "type": "uint96"
+                },
+                {
+                  "internalType": "uint96",
+                  "name": "reachedMilestoneAmount",
+                  "type": "uint96"
+                },
+                {
+                  "internalType": "string",
+                  "name": "grantRefID",
+                  "type": "string"
+                },
+                {
+                  "internalType": "uint16",
+                  "name": "nonce",
+                  "type": "uint16"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "owner",
+              "outputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "_granteeAddress",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "_delegate",
+                  "type": "address"
+                },
+                {
+                  "internalType": "uint96",
+                  "name": "_amount",
+                  "type": "uint96"
+                },
+                {
+                  "internalType": "uint96",
+                  "name": "_milestoneAmount",
+                  "type": "uint96"
+                },
+                {
+                  "internalType": "string",
+                  "name": "_grantRefID",
+                  "type": "string"
+                }
+              ],
+              "name": "setGrant",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "token",
+              "outputs": [
+                {
+                  "internalType": "contract IERC20",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "_granteeAddress",
+                  "type": "address"
+                },
+                {
+                  "internalType": "uint96",
+                  "name": "_currentMilestone",
+                  "type": "uint96"
+                },
+                {
+                  "internalType": "address",
+                  "name": "_delegate",
+                  "type": "address"
+                }
+              ],
+              "name": "updateGrant",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "_granteeAddress",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "_newDelegate",
+                  "type": "address"
+                }
+              ],
+              "name": "updateGrantDelegate",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
