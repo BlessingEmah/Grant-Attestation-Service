@@ -53,77 +53,65 @@ export default function MilestoneDetailPage() {
 
   return (
     <div>
-      <div className="h1">Milestone Page</div>
-      <div>
-        <div className="mt-2 mr-4 flex flex-row ">
-          <label className="block w-80  text-m mr-4 mt-2 leading-6 font-medium text-gray-900">
-            Grant Title
-          </label>
-          <input
-            id="grantTitle"
-            name="grantTitle"
-            type="text"
-            required
-            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-          />
-        </div>
-      </div>
+      <div className="h1 -ml-8 mb-10 font-Telegraf text-4xl text-lena">
+        {" "}
+        <h1>{`Milestone Detail`}</h1>
+      </div>{" "}
+      <div className="flex flex-col justify-center items-center">
+        <div className=" mb-10 bg-lena border border-black p-12 rounded-xl space-y-6">
+          <div className="mb-10">
+            <div>
+              <div className="mt-2 mr-4 flex flex-row ">
+                <label className="block w-80  text-m mr-4 mt-2 leading-6 font-medium text-gray-900">
+                  Grant Title
+                </label>
+                <p id="grantTitle" className="w-full text-gray-900 ">
+                  {"zetstdjakdjbcjkabsdjkc"}
+                  {attestation.grantTitle}
+                </p>
+              </div>
+            </div>
 
-      <div>
-        <div className="mt-2 mr-4 flex flex-row ">
-          <label className="block w-80  text-m mr-4 mt-2 leading-6 font-medium text-gray-900">
-            Grant Recipient
-          </label>
-          <input
-            id="grantRecipient"
-            name="grantRecipient"
-            type="text"
-            required
-            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-          />
-        </div>
-      </div>
+            <div>
+              <div className="mt-2 mr-4 flex flex-row ">
+                <label className="block w-80  text-m mr-4 mt-2 leading-6 font-medium text-gray-900">
+                  Milestone Description
+                </label>
+                <p className="w-full text-gray-900 ">
+                  {attestation.grantDescription}
+                </p>
+              </div>
+            </div>
 
-      <div>
-        <div className="mt-2 mr-4 flex flex-row ">
-          <label className="block w-80  text-m mr-4 mt-2 leading-6 font-medium text-gray-900">
-            Grant Description
-          </label>
-          <input
-            id="grant description"
-            name="grantDescription"
-            type="text"
-            required
-            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-          />
+            <div>
+              <div className="mt-2 mr-4 flex flex-row ">
+                <label className="block w-80  text-m mr-4 mt-2 leading-6 font-medium text-gray-900">
+                  Milestone Number
+                </label>
+                <p className="w-full text-gray-900 ">
+                  {attestation.milestoneNumber}
+                </p>
+              </div>
+            </div>
+            <div>
+              <div className="mt-2 mr-4 flex flex-row ">
+                <label className="block w-80  text-m mr-4 mt-2 leading-6 font-medium text-gray-900">
+                  Grant Amount
+                </label>
+                <p id="grantAmount" className="w-full text-gray-900 ">
+                  {attestation.grantAmount}
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-
-      <div>
-        <div className="mt-2 mr-4 flex flex-row ">
-          <label className="block w-80  text-m mr-4 mt-2 leading-6 font-medium text-gray-900">
-            Number of Milestones
-          </label>
-          <input
-            id="numberOfMilestones"
-            name="numberOfMilestones"
-            type="number"
-            required
-            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-          />
-        </div>
-      </div>
-      <div>
-        <div className="mt-2 mr-4 flex flex-row ">
-          <label className="block w-80  text-m mr-4 mt-2 leading-6 font-medium text-gray-900">
-            Grant Amount
-          </label>
-          <input
-            id="grantAmount"
-            name="grantAmount"
-            type="number"
-            required
-            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"          />
+        <div>
+          <button
+            className="inline-flex w-80 justify-center rounded-full border px-5 my-5 py-2 text-md font-medium border-wood bg-gypsum text-black hover:bg-snow"
+            onClick={() => createAttestation()}
+          >
+            {"Approve"}
+          </button>
         </div>
       </div>
     </div>
