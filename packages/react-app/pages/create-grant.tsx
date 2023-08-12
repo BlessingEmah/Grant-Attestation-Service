@@ -80,7 +80,8 @@ export default function CreateApprovedGrantPage() {
           className="bg-lena border border-black p-12 rounded-xl space-y-6"
           action="#"
           method="POST"
-        >
+          >
+        
           <div>
             <div className="mt-2 mr-4 flex flex-row ">
               <label className="block w-80  text-m mr-4 mt-2 leading-6 font-medium text-gray-900">
