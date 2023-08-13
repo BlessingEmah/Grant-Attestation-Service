@@ -28,7 +28,6 @@ module.exports = {
       url: "https://1rpc.io/base-goerli",
       accounts: [process.env.PRIVATE_KEY],
       chainId: 84531,
-      gasLimit: 25000000000,
     },
     optimismGoerli: {
       url: "https://optimism-goerli.publicnode.com",
