@@ -7,10 +7,11 @@ import { ethers } from "ethers";
 
 import { ceateSafe } from "../utils/safe";
 import { EASContractAddress } from "./grants";
+import { getNetwork } from "@wagmi/core";
 
 export default function CreateApprovedGrantPage() {
   const signer = useEthersSigner();
-
+  const { chain } = getNetwork();
   const [grantRecipient, setGrantRecipient] = useState(
     "0x99B551F0Bb2e634D726d62Bb2FF159a34964976C"
   );
@@ -26,11 +27,11 @@ export default function CreateApprovedGrantPage() {
 
   // TODO:add multisgWallet to schema
   const schemaEncoder = new SchemaEncoder(
-    "string grantTitle,string grantDescription,string numberOfMilestones,uint256 grantAmount"
+    "string grantTitle,string grantDescription,uint8 numberOfMilestones,uint256 grantAmount"
   );
 
   const schemaUID =
-    "0x40f3d426f8aef71e7426b6bdd8b858f865e716cfb8d0a1b32df80056079e49dc";
+    "0x1d949c379bc009756054090b4b06e35492b387e6892ba4fe50d72c64ff37b2ce";
 
   const createAttestation = async () => {
     // TODO: create multisig wallet
@@ -56,7 +57,7 @@ export default function CreateApprovedGrantPage() {
             {
               name: "numberOfMilestones",
               value: numberOfMilestones,
-              type: "string",
+              type: "uint8",
             },
             { name: "grantAmount", value: grantAmount, type: "uint256" },
           ]),
@@ -80,8 +81,7 @@ export default function CreateApprovedGrantPage() {
           className="bg-lena border border-black p-12 rounded-xl space-y-6"
           action="#"
           method="POST"
-          >
-        
+        >
           <div>
             <div className="mt-2 mr-4 flex flex-row ">
               <label className="block w-80  text-m mr-4 mt-2 leading-6 font-medium text-gray-900">

@@ -10,12 +10,13 @@ export default function Table({
   rows: Array<{
     refUID: string;
     grantRecipient: string;
-    multisigWallet: string;
+    grantDescription: string;
+    // multisigWallet: string;
     title: string;
     milestones: BigInt;
     amount: BigInt;
   }>;
-  chain: string;
+  chain: any;
 }) {
   return (
     <Card className="h-full w-full overflow-scroll block rounded-ml ">
@@ -39,22 +40,19 @@ export default function Table({
           </tr>
         </thead>
         <tbody>
-          {rows.map(
+          {rows?.map(
             (
               {
                 refUID,
                 title,
                 grantRecipient,
-                multisigWallet,
+                grantDescription,
                 milestones,
                 amount,
               },
               index
             ) => {
-              const isLast = index === rows.length - 1;
-              const classes = isLast
-                ? "p-4"
-                : "p-4 border-b bg-lena2 border-blue-gray-50";
+              const classes = "p-4 border-b bg-lena2 border-blue-gray-50";
 
               return (
                 <tr key={refUID}>
@@ -98,7 +96,7 @@ export default function Table({
                       color="blue-gray"
                       className="font-normal"
                     >
-                      {multisigWallet}
+                      {grantDescription}
                     </Typography>
                   </td>
                   <td className={classes}>
