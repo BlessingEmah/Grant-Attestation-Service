@@ -2,6 +2,11 @@
 
 Grant Visor simplifies grant management, allowing DAOs to collaborate seamlessly, allocate funds efficiently, and pursue their goals with confidence. The dapp addresses the challenge of validating completed milestones by grantees, ensures transparency in the distribution of grant payments, and automates payment processes for DAOs through a validated system powered by attestations.
 
+- [Get the project running](#how-to-get-this-project-running)
+- [What is Grant Visor](#what-is-grantvisor)
+- [User Flow](#userflow)
+- [How it's made](#how-its-made)
+
 ## how to get this project running
 
 naviagte into the react project
@@ -40,6 +45,15 @@ Another use-case of our application would be that it serves as a Grant Explorer.
 
 The Grant Manager of a project will create the Grant Attestation on our platform. After they receive the GrantUID and created multisigaddress, they will open the our GrantModule in the Zodiac app of the Safe Multisg of the Grant Committee.
 They will set up the Grant with amount, milestones and a delegate (in that case the Grant Manager for that specific project). After they have approved it, the Grant Manager will be able to approve Milestones (that the Grantee has created on our page) out of our dApp and trigger payments to the recipient.
+
+grantee: 0x99B551F0Bb2e634D726d62Bb2FF159a34964976C
+
+Grant Manager: 0x78344979959C9d25Beb73748269A2B5533F87a51
+
+1. So first we created our Grant Schema on Base - it exists (User wont have to do anything): https://base-goerli.easscan.org/schema/view/0x40f3d426f8aef71e7426b6bdd8b858f865e716cfb8d0a1b32df80056079e49dc
+2. We create the Milestone Schema: https://base-goerli.easscan.org/schema/view/0x83f0b577c98f5eca3ba23e3ee5628d0062d910614c34f118956e15ddb13641c1
+
+Userflow 2. The Grant Manager creates the Grant Attestation in our application: https://base-goerli.easscan.org/attestation/view/0x8c0b93352e1b350c85afda334d4425e65513e0e7333fa9981ed2de97fbe3996b 3. They deploy the PaymentGrantModule on Base in their Multisig: https://goerli.basescan.org/address/0x1c666c332258644e2f2ea53941ae19b7905a5e5 4. They call the `setGrant` function in the Module: https://goerli.basescan.org/tx/0xcd797e6b1a21c6738af0312e5b3b01c4a04b5fbc7c8b04006434f22f324576e5 5. The grantee creates a Milestone attestation: https://base-goerli.easscan.org/attestation/view/0xac3f77cda1b5b47de30f03e15cfc46188cc10e213c8c1746d488d2d78076cef9 7. The Grant Manager will be able to approve it as they have been set as delegate in our Module and can trigger the payment without the other Grant Committee call the `UpdateGrant` function of our Smart Contract - https://goerli.basescan.org/tx/0xaab1f5a2cde6eb4e01e28c5456173fa250bdaf5f9448bf7332c8e92fb6b9db0b 8. we go back to our app and will see that the current status of our grant has been updated and is reflecting the payment (subgraph The Graph and EAS Graph data)
 
 ## How it's made
 
