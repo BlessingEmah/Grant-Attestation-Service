@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/Users/lenahierzi/Developer/Grant-Attestation-Service/packages/hardhat/contracts/Enum.sol": {
-      "lastModificationDate": 1691637160982,
-      "contentHash": "7497d9dde270e033dd68961a26fee26a",
+      "lastModificationDate": 1691916229604,
+      "contentHash": "d7ca4b5a74a1edd97507f7788cecc2b9",
       "sourceName": "contracts/Enum.sol",
       "solcConfig": {
         "version": "0.8.0",
@@ -303,10 +303,10 @@
         "IERC20"
       ]
     },
-    "/Users/lenahierzi/Developer/Grant-Attestation-Service/packages/hardhat/contracts/GrantPaymentModule.sol": {
-      "lastModificationDate": 1691880726794,
-      "contentHash": "3c0d3f0a02f0f5e89e239cacac329813",
-      "sourceName": "contracts/GrantPaymentModule.sol",
+    "/Users/lenahierzi/Developer/Grant-Attestation-Service/packages/hardhat/contracts/GrantPayment.sol": {
+      "lastModificationDate": 1691921122968,
+      "contentHash": "212eb64b071ecdf6dd59c8314f8ee0c4",
+      "sourceName": "contracts/GrantPayment.sol",
       "solcConfig": {
         "version": "0.8.0",
         "settings": {
@@ -346,8 +346,7 @@
         "^0.8.0"
       ],
       "artifacts": [
-        "GnosisSafe",
-        "GrantPaymentModule"
+        "GrantPayment"
       ]
     }
   }
