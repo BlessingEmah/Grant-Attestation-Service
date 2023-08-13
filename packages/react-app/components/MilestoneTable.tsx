@@ -13,7 +13,7 @@ export default function MilestoneTable({
     grantTitle: string;
     grantUID: string;
     milestoneDescription: string;
-    numberOfMilestones: number;
+    milestoneNumber: number;
   }>;
 }) {
   const { chain, chains } = getNetwork();
