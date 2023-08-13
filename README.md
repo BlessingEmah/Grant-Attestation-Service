@@ -2,6 +2,8 @@
 
 Grant Visor simplifies grant management, allowing DAOs to collaborate seamlessly, allocate funds efficiently, and pursue their goals with confidence. The dapp addresses the challenge of validating completed milestones by grantees, ensures transparency in the distribution of grant payments, and automates payment processes for DAOs through a validated system powered by attestations.
 
+Find a walk through video (here)[https://www.loom.com/share/4e543d4e885546b7bf6ead0b50fbc2d9?sid=b535d77a-1895-4125-a4d4-808078989be0]
+
 - [Get the project running](#how-to-get-this-project-running)
 - [What is Grant Visor](#what-is-grantvisor)
 - [User Flow](#userflow)

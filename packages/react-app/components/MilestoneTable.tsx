@@ -47,7 +47,7 @@ export default function MilestoneTable({
                 grantTitle,
                 grantUID,
                 milestoneDescription,
-                numberOfMilestones,
+                milestoneNumber,
               },
               index
             ) => {
@@ -79,7 +79,7 @@ export default function MilestoneTable({
                       color="blue-gray"
                       className="font-normal"
                     >
-                      {grantTitle}
+                      {grantTitle || "Research"}
                     </Typography>
                   </td>
                   <td className={classes}>
@@ -88,7 +88,8 @@ export default function MilestoneTable({
                       color="blue-gray"
                       className="font-normal"
                     >
-                      {grantUID}
+                      {grantUID ||
+                        "0x999b3693636ab6ebcc20a702617a21cb4835dee40a8fc174b062b481e6873592"}
                     </Typography>
                   </td>
                   <td className={classes}>
@@ -97,7 +98,7 @@ export default function MilestoneTable({
                       color="blue-gray"
                       className="font-normal"
                     >
-                      {milestoneDescription}
+                      {milestoneDescription || "Milestone 1"}
                     </Typography>
                   </td>
                   <td className={classes}>
@@ -106,7 +107,7 @@ export default function MilestoneTable({
                       color="blue-gray"
                       className="font-normal"
                     >
-                      {numberOfMilestones}
+                      {milestoneNumber || 1}
                     </Typography>
                   </td>
 
@@ -121,7 +122,11 @@ export default function MilestoneTable({
                       <Link
                         href={{
                           pathname: "/milestone/[id]",
-                          query: { id: ID },
+                          query: {
+                            id:
+                              ID ||
+                              "0xa0b17f53dcf4f8feae7224a11553c9a3256533cd97da49a4207503b1fcd29baf",
+                          },
                         }}
                       >
                         Approve

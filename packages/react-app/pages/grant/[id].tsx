@@ -79,11 +79,8 @@ export default function GrantDetailPage() {
     //   }
     // `;
     const query = gql`
-      query () {
-        attestations(
-          take: 1
-          orderBy: { time: desc }
-        ) {
+      query ($userAddress: String) {
+        attestations(take: 1, orderBy: { time: desc }) {
           id
           attester
           recipient
@@ -103,7 +100,7 @@ export default function GrantDetailPage() {
       return {
         ID: att.id,
         grantTitle: decoded[0].value.value,
-        grantUID,
+        grantUID: id || grantUID,
         milestoneDescription: decoded[1].value.value.toString(),
         milestoneNumber: decoded[2].value.value.toString(),
       };
@@ -139,7 +136,7 @@ export default function GrantDetailPage() {
                   Grant Title
                 </label>
                 <p id="grantTitle" className="w-full text-gray-900 ">
-                  {"Research Grant"}
+                  {"Research"}
                 </p>
               </div>
             </div>
@@ -167,7 +164,7 @@ export default function GrantDetailPage() {
                   Grant Amount
                 </label>
                 <p id="grantAmount" className="w-full text-gray-900 ">
-                  1000/2000
+                  0/2000
                 </p>
               </div>
             </div>
