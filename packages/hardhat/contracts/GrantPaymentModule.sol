@@ -20,8 +20,8 @@ interface GnosisSafe {
 }
 
 contract GrantPaymentModule {
-    IERC20 public usdcToken; // Declare the USDC token contract
-    address usdcTokenAddress;
+    IERC20 public token; // Declare the USDC token contract
+    address tokenAddress;
 
     string public constant NAME = "GRANTS Module";
     string public constant VERSION = "0.1.0";
@@ -65,10 +65,10 @@ contract GrantPaymentModule {
         _;
     }
 
-    constructor(address _usdcTokenAddress) {
+    constructor(address _tokenAddress) {
         owner = msg.sender; // Set the contract deployer as the initial owner.
-        usdcTokenAddress = _usdcTokenAddress;
-        usdcToken = IERC20(usdcTokenAddress); // Initialize the USDC token contract
+        tokenAddress = _tokenAddress;
+        token = IERC20(tokenAddress); // Initialize the USDC token contract
     }
 
     // do we need this????
@@ -84,7 +84,7 @@ contract GrantPaymentModule {
         uint96 _amount,
         uint96 _milestoneAmount,
         string memory _grantRefID
-    ) public onlyApprovedDelegate(_delegate) {
+    ) public {
         grants[_granteeAddress] = Grant({
             delegate: _delegate,
             amount: _amount,
@@ -118,7 +118,7 @@ contract GrantPaymentModule {
         address _granteeAddress,
         uint96 _currentMilestone,
         address _delegate
-    ) public onlyApprovedDelegate(_delegate) {
+    ) public {
         Grant storage grant = grants[_granteeAddress];
         require(_delegate == grant.delegate, "Not authorized");
         if (grant.reachedMilestoneAmount != _currentMilestone) {
@@ -147,8 +147,8 @@ contract GrantPaymentModule {
         );
 
         // Transfer the funds.
-        usdcToken.approve(msg.sender, transferAmount);
-        usdcToken.transferFrom(msg.sender, _granteeAddress, transferAmount);
+        token.approve(msg.sender, transferAmount);
+        token.transferFrom(msg.sender, _granteeAddress, transferAmount);
         // payable(_granteeAddress).transfer(transferAmount);
 
         // Update the distributed amount for the grant.

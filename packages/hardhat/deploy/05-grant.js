@@ -1,9 +1,10 @@
 module.exports = async ({ getNamedAccounts, deployments }) => {
   const { deploy } = deployments;
   const { deployer } = await getNamedAccounts();
-  await deploy("Grant", {
+  await deploy("GrantPaymentModule", {
     from: deployer,
     log: true,
+    args: ["0x4582480Eae797Fa27C89B6eac5bf70a386E39AD3"],
   });
 };
 
@@ -13,4 +14,4 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
  * Use tags to run specific deploy scripts
  * For example:- npx hardhat deploy --tags Storage will run only this script
  */
-module.exports.tags = ["Grant"];
+module.exports.tags = ["GrantPaymentModule"];
