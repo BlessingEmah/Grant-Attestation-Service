@@ -20,8 +20,11 @@ interface GnosisSafe {
 }
 
 contract GrantPaymentModule {
+    // ----------------------------------------
+    //      Constants
+    // ----------------------------------------
+
     IERC20 public token; // Declare the USDC token contract
-    address tokenAddress;
 
     string public constant NAME = "GRANTS Module";
     string public constant VERSION = "0.1.0";
@@ -30,21 +33,47 @@ contract GrantPaymentModule {
     bytes32 public constant DOMAIN_SEPARATOR_TYPEHASH =
         keccak256("Domain Separator");
 
+    address public owner; // contract owner/admin
+    address tokenAddress;
+
+    // do we need Safe -> RefUID -> Grants ??
+    // RefUID -> Grants ??
+    mapping(string => Grant) public grants;
+    mapping(address => bool) public approvedDelegates;
+
     struct Grant {
         address delegate;
+        address grantee;
         uint96 amount;
         uint96 distributedAmount;
         uint96 milestoneAmount;
         uint96 reachedMilestoneAmount;
         string grantRefID;
+        Enum.GrantStatus status;
         uint16 nonce; // You mentioned you're unsure about the nonce. For now, I've added it.
     }
 
-    address public owner; // contract owner/admin
+    // ----------------------------------------
+    //      Events
+    // ----------------------------------------
 
-    // do we need Safe -> Delegate -> Allowance ??
-    mapping(address => Grant) public grants;
-    mapping(address => bool) public approvedDelegates;
+    event GrantCreated(
+        string grantRefID,
+        address delegate,
+        uint96 amount,
+        uint96 milestoneAmount
+    );
+    event GrantUpdated(
+        string grantRefID,
+        uint96 distributedAmount,
+        uint96 reachedMilestoneAmount
+    );
+    event GrantPayed(string grantRefID, Enum.GrantStatus status);
+    event GrantCanceled(string grantRefID, Enum.GrantStatus status);
+
+    // ----------------------------------------
+    //      Modifiers
+    // ----------------------------------------
 
     modifier onlyOwner() {
         require(msg.sender == owner, "Not authorized: must be owner");
@@ -56,10 +85,9 @@ contract GrantPaymentModule {
         _;
     }
 
-    modifier onlyDelegateOrOwner(address _granteeAddress) {
+    modifier onlyDelegateOrOwner(address _delegate, string memory _grantRefID) {
         require(
-            msg.sender == grants[_granteeAddress].delegate ||
-                msg.sender == owner,
+            msg.sender == grants[_grantRefID].delegate || msg.sender == owner,
             "Not authorized: must be current delegate or owner"
         );
         _;
@@ -85,53 +113,65 @@ contract GrantPaymentModule {
         uint96 _milestoneAmount,
         string memory _grantRefID
     ) public {
-        grants[_granteeAddress] = Grant({
+        grants[_grantRefID] = Grant({
             delegate: _delegate,
+            grantee: _granteeAddress,
             amount: _amount,
             distributedAmount: 0,
             milestoneAmount: _milestoneAmount,
             reachedMilestoneAmount: 0,
             grantRefID: _grantRefID,
+            status: Enum.GrantStatus.Created,
             nonce: 0
         });
+
+        emit GrantCreated(_grantRefID, _delegate, _amount, _milestoneAmount);
     }
 
     function getGrant(
-        address _granteeAddress
+        string memory _grantRefID
     ) public view returns (Grant memory) {
-        return grants[_granteeAddress];
+        return grants[_grantRefID];
     }
 
     function updateGrantDelegate(
-        address _granteeAddress,
+        string memory _grantRefID,
         address _newDelegate
-    ) public onlyDelegateOrOwner(_granteeAddress) {
+    ) public onlyDelegateOrOwner(msg.sender, _grantRefID) {
         require(
             approvedDelegates[_newDelegate],
             "New delegate is not approved"
         );
 
-        grants[_granteeAddress].delegate = _newDelegate;
+        grants[_grantRefID].delegate = _newDelegate;
     }
 
     function updateGrant(
-        address _granteeAddress,
+        string memory _grantRefID,
         uint96 _currentMilestone,
         address _delegate
     ) public {
-        Grant storage grant = grants[_granteeAddress];
-        require(_delegate == grant.delegate, "Not authorized");
+        Grant storage grant = grants[_grantRefID];
+        // if a new milestone is approved, a matching amount will be payed to the grantee
         if (grant.reachedMilestoneAmount != _currentMilestone) {
             grant.reachedMilestoneAmount = _currentMilestone;
+
+            executeMilestoneTransfer(_grantRefID);
+            if (grant.milestoneAmount == _currentMilestone) {
+                grant.status = Enum.GrantStatus.Payed;
+                emit GrantPayed(_grantRefID, grant.status);
+            }
+            if (grant.milestoneAmount != _currentMilestone) {
+                grant.status = Enum.GrantStatus.Ongoing;
+            }
         }
         if (grant.delegate != _delegate) {
             grant.delegate = _delegate;
         }
-        executeMilestoneTransfer(_granteeAddress);
     }
 
-    function executeMilestoneTransfer(address _granteeAddress) internal {
-        Grant storage grant = grants[_granteeAddress];
+    function executeMilestoneTransfer(string memory _grantRefID) internal {
+        Grant storage grant = grants[_grantRefID];
 
         // Calculate the amount to transfer for the reached milestone.
         uint96 transferAmount = grant.amount / grant.milestoneAmount;
@@ -148,14 +188,17 @@ contract GrantPaymentModule {
 
         // Transfer the funds.
         token.approve(msg.sender, transferAmount);
-        token.transferFrom(msg.sender, _granteeAddress, transferAmount);
+        token.transferFrom(msg.sender, grant.grantee, transferAmount);
         // payable(_granteeAddress).transfer(transferAmount);
 
         // Update the distributed amount for the grant.
         grant.distributedAmount += transferAmount;
     }
 
-    function deleteGrant(address _granteeAddress) public onlyOwner {
-        delete grants[_granteeAddress];
+    function cancelGrant(string memory _grantRefID) public onlyOwner {
+        Grant storage grant = grants[_grantRefID];
+
+        grant.status = Enum.GrantStatus.Canceled;
+        emit GrantCanceled(_grantRefID, grant.status);
     }
 }

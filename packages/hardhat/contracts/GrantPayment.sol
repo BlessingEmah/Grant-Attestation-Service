@@ -5,7 +5,21 @@ import "./Enum.sol";
 import "./SignatureDecoder.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
-contract GrantPayment {
+interface GnosisSafe {
+    /// @dev Allows a Module to execute a Safe transaction without any further confirmations.
+    /// @param to Destination address of module transaction.
+    /// @param value Ether value of module transaction.
+    /// @param data Data payload of module transaction.
+    /// @param operation Operation type of module transaction.
+    function execTransactionFromModule(
+        address to,
+        uint256 value,
+        bytes calldata data,
+        Enum.Operation operation
+    ) external returns (bool success);
+}
+
+contract GrantPaymentModule {
     // ----------------------------------------
     //      Constants
     // ----------------------------------------
@@ -56,17 +70,6 @@ contract GrantPayment {
     );
     event GrantPayed(string grantRefID, Enum.GrantStatus status);
     event GrantCanceled(string grantRefID, Enum.GrantStatus status);
-    event ExecuteGrantTransfer(
-        address delegate,
-        address grantee,
-        uint96 distributedAmount,
-        uint96 amount,
-        uint96 milestoneAmount,
-        uint96 reachedMilestoneAmount,
-        string grantRefID,
-        Enum.GrantStatus status,
-        uint16 nonce
-    );
 
     // ----------------------------------------
     //      Modifiers
@@ -82,7 +85,7 @@ contract GrantPayment {
         _;
     }
 
-    modifier onlyDelegateOrOwner(string memory _grantRefID) {
+    modifier onlyDelegateOrOwner(address _delegate, string memory _grantRefID) {
         require(
             msg.sender == grants[_grantRefID].delegate || msg.sender == owner,
             "Not authorized: must be current delegate or owner"
@@ -134,7 +137,7 @@ contract GrantPayment {
     function updateGrantDelegate(
         string memory _grantRefID,
         address _newDelegate
-    ) public onlyDelegateOrOwner(_grantRefID) {
+    ) public onlyDelegateOrOwner(msg.sender, _grantRefID) {
         require(
             approvedDelegates[_newDelegate],
             "New delegate is not approved"
@@ -143,19 +146,17 @@ contract GrantPayment {
         grants[_grantRefID].delegate = _newDelegate;
     }
 
-    // TODO: payable needs to be removed. as payment should work with the set token
     function updateGrant(
         string memory _grantRefID,
         uint96 _currentMilestone,
         address _delegate
-    ) public payable {
-        // Get current state
-        Grant memory grant = grants[_grantRefID];
+    ) public {
+        Grant storage grant = grants[_grantRefID];
         // if a new milestone is approved, a matching amount will be payed to the grantee
         if (grant.reachedMilestoneAmount != _currentMilestone) {
             grant.reachedMilestoneAmount = _currentMilestone;
 
-            executeGrantTransfer(_grantRefID);
+            executeMilestoneTransfer(_grantRefID);
             if (grant.milestoneAmount == _currentMilestone) {
                 grant.status = Enum.GrantStatus.Payed;
                 emit GrantPayed(_grantRefID, grant.status);
@@ -169,43 +170,33 @@ contract GrantPayment {
         }
     }
 
-    function executeGrantTransfer(string memory _grantRefID) internal {
-        // Get current state
-        Grant memory grant = grants[_grantRefID];
+    function executeMilestoneTransfer(string memory _grantRefID) internal {
+        Grant storage grant = grants[_grantRefID];
 
         // Calculate the amount to transfer for the reached milestone.
         uint96 transferAmount = grant.amount / grant.milestoneAmount;
 
         // Ensure the contract has enough funds and the grant has not exceeded its limit.
         require(
+            address(this).balance >= transferAmount,
+            "Not enough funds in the contract"
+        );
+        require(
             grant.distributedAmount + transferAmount <= grant.amount,
             "Transfer exceeds grant limit"
         );
 
-        // Transfer the funds. should be transferAmount, when payment with set token is enabled
-        token.transferFrom(msg.sender, grant.grantee, msg.value);
-
-        grant.nonce = grant.nonce + 1;
-
+        // Transfer the funds.
+        token.approve(msg.sender, transferAmount);
+        token.transferFrom(msg.sender, grant.grantee, transferAmount);
         // payable(_granteeAddress).transfer(transferAmount);
 
         // Update the distributed amount for the grant.
         grant.distributedAmount += transferAmount;
-        emit ExecuteGrantTransfer(
-            grant.delegate,
-            grant.grantee,
-            grant.milestoneAmount,
-            grant.reachedMilestoneAmount,
-            grant.amount,
-            grant.distributedAmount,
-            grant.grantRefID,
-            grant.status,
-            grant.nonce - 1
-        );
     }
 
     function cancelGrant(string memory _grantRefID) public onlyOwner {
-        Grant memory grant = grants[_grantRefID];
+        Grant storage grant = grants[_grantRefID];
 
         grant.status = Enum.GrantStatus.Canceled;
         emit GrantCanceled(_grantRefID, grant.status);
